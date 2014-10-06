@@ -3,7 +3,7 @@
 
 float *load_matrix(char *filename, int *n, int *m);
 void multiplicacion( float *A, float *B , float *C, int N, int m, int n);
-void transpose(float * m, int N, int m);
+void transpose(float *A, int N, int m);
 
 
 int main(int argc, char **argv){
