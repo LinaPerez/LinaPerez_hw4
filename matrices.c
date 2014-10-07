@@ -3,7 +3,6 @@
 
 float *load_matrix(char *filename, int *n, int *m);
 void multiplicacion( float *A, float *B , float *C, int N, int m, int n);
-void transpose(float *A, int N, int m);
 
 
 int main(int argc, char **argv){
@@ -33,18 +32,11 @@ int main(int argc, char **argv){
 
   multiplicacion(matrix1, matrix2, matrix3, n_row, n_cols, n); 
 
-  transpose(matrix1, n_row, n_cols);
- 
 
-
- 
       
       printf(" %f \n" , matrix3[i*n_cols + j]);
     
    
- 
-
- 
 
   return 0;
 }
@@ -52,6 +44,10 @@ int main(int argc, char **argv){
 void multiplicacion( float *A, float *B , float *C, int N, int m, int n){
 
   int i, j, k, p;
+  int pos_ij; 
+  int pos_ji;
+
+  float tmp; 
 
   for(i=0; i<N; i++){
     for(j=0; j<m; j++){
@@ -61,15 +57,23 @@ void multiplicacion( float *A, float *B , float *C, int N, int m, int n){
 	  C[i*m + j] = C[i*m + j] + (A[i*m + k] * B[k*m + j]);
 	
       }
-	B[i*m + j] = C[i*m + j] ;
-	
+
+      pos_ij = i + (N * j);
+      pos_ji = j + (N * i);
+      tmp = A[pos_ij];
+      A[pos_ij] = A[pos_ji];
+      A[pos_ji] = tmp;
+
+	B[i*m + j] =A[pos_ji] ;
+  
+
       }
     }
   }   
 }
 
 
-}
+
 float *load_matrix(char *filename, int *n, int *m){
   float *matrix;
   
